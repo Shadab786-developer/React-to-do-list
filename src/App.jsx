@@ -4,19 +4,27 @@ import { TodoProvider } from "./contexts";
 import { TodoForm, TodoItem } from "./components";
 
 function App() {
+  // State to hold the list of todos
   const [todos, setTodos] = useState([]);
 
+  // Function to add a new todo
   const addTodo = (todo) => {
     setTodos((prev) => [{ id: Date.now(), ...todo }, ...prev]);
   };
+
+  // Function to update an existing todo
   const updateTodo = (id, todo) => {
     setTodos((prev) =>
       prev.map((prevTodo) => (prevTodo.id === todo.id ? todo : prevTodo))
     );
   };
+
+  // Function to delete a todo by id
   const deleteTodo = (id) => {
     setTodos((prev) => prev.filter((prevTodo) => prevTodo.id !== id));
   };
+
+  // Function to toggle the completion status of a todo
   const toggleComplete = (id) => {
     setTodos((prev) =>
       prev.map((prevTodo) =>
@@ -27,6 +35,7 @@ function App() {
     );
   };
 
+  // Load todos from localStorage when the component mounts
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem("todos"));
     if (todos && todos.length > 0) {
@@ -34,6 +43,7 @@ function App() {
     }
   }, []);
 
+  // Save todos to localStorage whenever the todos state changes
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -48,12 +58,11 @@ function App() {
             Manage Your Todos
           </h1>
           <div className="mb-4">
-            {/* Todo form coes here */}
+            {/* Todo form component */}
             <TodoForm />
           </div>
           <div className="flex flex-wrap gap-y-3">
-            {/* Loop and add todo item here */}
-
+            {/* Loop through todos and render each TodoItem */}
             {todos.map((todo) => (
               <div key={todo.id} className="w-full">
                 <TodoItem todo={todo} />

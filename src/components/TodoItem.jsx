@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { useTodo } from "../contexts/TodoContext";
 
 function TodoItem({ todo }) {
+  // State to manage if the todo item is editable
   const [isTodoEditable, setIsTodoEditable] = useState(false);
+  // State to hold the current message of the todo item
   const [todoMsg, setTodoMsg] = useState(todo.todo);
   const { updateTodo, deleteTodo, toggleComplete } = useTodo();
 
+  // Function to handle editing the todo item
   const editTodo = () => {
     updateTodo(todo.id, { ...todo, todo: todoMsg });
     setIsTodoEditable(false);
   };
 
+  // Function to handle toggling the completion status of the todo item
   const toggleCompleted = () => {
     toggleComplete(todo.id);
   };
@@ -27,7 +31,6 @@ function TodoItem({ todo }) {
         checked={todo.completed}
         onChange={toggleCompleted}
       />
-
       <input
         type="text"
         className={`border outline-none w-full bg-transparent rounded-lg ${

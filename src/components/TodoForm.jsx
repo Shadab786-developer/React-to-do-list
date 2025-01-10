@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { useTodo } from "../contexts/TodoContext";
 
 function TodoForm() {
+  // State to hold the current input value for the new todo
   const [todo, setTodo] = useState("");
   const { addTodo } = useTodo();
+
+  // Function to handle form submission
   const add = (e) => {
     e.preventDefault();
     if (!todo) return;
     addTodo({ todo, completed: false });
     setTodo("");
   };
+
   return (
     <form onSubmit={add} className="flex">
       <input
@@ -21,7 +25,6 @@ function TodoForm() {
           setTodo(e.target.value);
         }}
       />
-
       <button
         type="submit"
         className="rounded-r-lg px-3 bg-green-600 text-white shrink-0"
